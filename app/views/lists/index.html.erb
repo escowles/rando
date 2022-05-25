@@ -4,11 +4,8 @@
 
 <div id="lists">
   <% @lists.each do |list| %>
-    <%= render list %>
-    <p>
-      <%= link_to "Show this list", list %>
-    </p>
+    <p><%= link_to list.code, list_path(list.code) %></p>
   <% end %>
 </div>
 
-<%= link_to "New list", new_list_path %>
+<%= link_to "Create List", create_list_path, method: :post %>

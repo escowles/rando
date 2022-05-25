@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: %i[ show edit update destroy ]
+  before_action :set_list, only: %i[ show destroy ]
 
   # GET /lists
   def index
@@ -10,32 +10,14 @@ class ListsController < ApplicationController
   def show
   end
 
-  # GET /lists/new
-  def new
-    @list = List.new
-  end
-
-  # GET /lists/1/edit
-  def edit
-  end
-
   # POST /lists
   def create
-    @list = List.new(list_params)
+    @list = List.new
 
     if @list.save
-      redirect_to @list, notice: "List was successfully created."
+      redirect_to lists_path, notice: "List was successfully created."
     else
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /lists/1
-  def update
-    if @list.update(list_params)
-      redirect_to @list, notice: "List was successfully updated."
-    else
-      render :edit, status: :unprocessable_entity
+      render :show, status: :unprocessable_entity
     end
   end
 
@@ -48,11 +30,6 @@ class ListsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_list
-      @list = List.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def list_params
-      params.require(:list).permit(:code)
+      @list = List.find_by(code: params[:id])
     end
 end
