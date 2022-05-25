@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_25_194414) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_25_204531) do
   create_table "lists", force: :cascade do |t|
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "values", force: :cascade do |t|
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "list_id", null: false
+    t.index ["list_id"], name: "index_values_on_list_id"
+  end
+
+  add_foreign_key "values", "lists"
 end

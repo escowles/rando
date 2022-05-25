@@ -1,8 +1,21 @@
 <p style="color: green"><%= notice %></p>
 
 <h1><%= @list.code %></h1>
+<ul>
+  <% @list.values.each do |v| %>
+    <li>
+      <%= v.text %>
+      <%= button_to "remove", remove_from_list_path(@list.code, v.id), method: :delete %>
+    </li>
+  <% end %>
+</ul>
 
 <div>
   <%= link_to "Back to lists", lists_path %>
   <%= button_to "Destroy this list", list_path(@list.code), method: :delete %>
 </div>
+
+<%= form_with url: add_to_list_path(@list.code), method: :post do |form| %>
+  <%= form.text_field :text %>
+  <%= form.submit "add" %>
+<% end %>
