@@ -1,21 +1,22 @@
 <p style="color: green"><%= notice %></p>
 
-<h1><%= @list.code %></h1>
+<h1>
+  <%= link_to "Lists", lists_path %>:
+  <%= @list.code %>
+</h1>
 <ul>
   <% @list.values.each do |v| %>
     <li>
       <%= v.text %>
-      <%= button_to "remove", remove_from_list_path(@list.code, v.id), method: :delete %>
+      <%= button_to "remove", remove_from_list_path(@list.code, v.id), method: :delete, form: { style: "display: inline;" } %>
     </li>
   <% end %>
+  <% if @list.values.empty? %><i>no items</i><% end %>
 </ul>
 
-<div>
-  <%= link_to "Back to lists", lists_path %>
-  <%= button_to "Destroy this list", list_path(@list.code), method: :delete %>
-</div>
-
 <%= form_with url: add_to_list_path(@list.code), method: :post do |form| %>
-  <%= form.text_field :text %>
+  <%= form.text_field :text, autofocus: true %>
   <%= form.submit "add" %>
 <% end %>
+
+<p><%= button_to "Delete List", list_path(@list.code), method: :delete %></p>
