@@ -19,4 +19,6 @@
   <%= form.submit "add" %>
 <% end %>
 
+<h2 style="color: red"><%= alert %></h2>
+<p><%= button_to "Random Item", random_value_path(@list.code), method: :get %></p>
 <p><%= button_to "Delete List", list_path(@list.code), method: :delete %></p>

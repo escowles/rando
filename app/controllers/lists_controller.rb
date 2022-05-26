@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: %i[ show destroy add remove ]
+  before_action :set_list, only: %i[ show destroy add remove random_value ]
 
   # GET /lists
   def index
@@ -42,6 +42,12 @@ class ListsController < ApplicationController
     @value = Value.find_by(list_id: @list.id, id: params[:value_id])
     @value.destroy
     redirect_to list_path(@list.code), notice: "Value was successfully removed."
+  end
+
+  # GET /lists/1/random
+  def random_value
+    @pick = @list.values[rand(@list.values.length)]
+    redirect_to list_path(@list.code), alert: @pick.text
   end
 
   private
